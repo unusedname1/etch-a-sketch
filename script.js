@@ -21,34 +21,34 @@ function init() {
 
     body.addEventListener('mousedown', () => { mouseDown = true; });
     body.addEventListener('mouseup', () => { mouseDown = false; });
-    
+
     slider.addEventListener('change', () => {
         number.value = slider.value;
         configureSquares(slider.value);
     })
-    
+
     number.addEventListener('change', () => {
         if (number.value < MIN_SQUARES) number.value = MIN_SQUARES;
         else if (number.value > MAX_SQUARES) number.value = MAX_SQUARES;
-    
+
         slider.value = number.value
         configureSquares(number.value);
     })
-    
+
     buttons.forEach(addButtonListeners);
 }
 
 function createGrid() {
     for (let i = 0; i < totalSquares; ++i) {
         let square = document.createElement('div');
-    
+
         if (i < totalSquares - numSquares * numSquares)
             square.classList.add('hidden');
-    
+
         const squareSize = BOX_SIZE / numSquares;
         square.style.width = `${squareSize}px`;
         square.style.height = `${squareSize}px`;
-    
+
         square.classList.add('square');
         square.setAttribute('ondragstart', 'return false;');
         square.setAttribute('ondrop', 'return false;');
@@ -56,9 +56,9 @@ function createGrid() {
         square.addEventListener('mousedown', paintSquare);
         square.addEventListener('mouseenter', processMouseover);
         square.addEventListener('mouseleave', removeMouseover);
-    
+
         box.appendChild(square);
-    
+
         function paintSquare(event) {
             switch (tool) {
                 case 'pencil':
@@ -72,12 +72,12 @@ function createGrid() {
                     throw 'unknown tool selected';
             }
         }
-    
+
         function processMouseover(event) {
             if (mouseDown) paintSquare(event);
             else event.target.classList.add('mouseover');
         }
-    
+
         function removeMouseover(event) {
             event.target.classList.remove('mouseover');
         }
@@ -92,7 +92,7 @@ function addButtonListeners(button) {
             colorInput.addEventListener('change', (event) => {
                 color = event.target.value;
             });
-
+            
             break;
         case 'trash':
             button.addEventListener('click', clearSquares);
@@ -145,7 +145,7 @@ function configureSquares(value) {
             square.classList.add('hidden');
         else
             square.classList.remove('hidden');
-        
+
         eraseSquare(square)
     }
 }
