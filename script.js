@@ -9,8 +9,8 @@ const slider = document.querySelector('.slider');
 const number = document.querySelector('.number');
 
 let tool = 'pencil';
-let numSquares = 16;
-let squareSize = 256 / numSquares;
+let numSquares = MIN_SQUARES;
+let squareSize = BOX_SIZE / numSquares;
 let mouseDown = false;
 let color = '#000000';
 
