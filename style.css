@@ -1,0 +1,158 @@
+@font-face {
+    font-family: pixel;
+    src: url(font/FFFFORWA.TTF);
+}
+
+@font-face {
+    font-family: arcade;
+    src: url(font/ARCADECLASSIC.TTF);
+}
+
+body {
+    margin: 0;
+    background-color: rgb(105, 124, 128);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+h1 {
+    font-family: pixel;
+    font-size: 12px;
+}
+
+button,
+button input {
+    box-sizing: border-box;
+    width: 64px;
+    height: 64px;
+    padding: 0;
+    border: 0;
+    image-rendering: auto;
+    image-rendering: crisp-edges;
+    image-rendering: pixelated;
+    background-size: contain;
+}
+
+button input {
+    opacity: 0;
+}
+
+button.color {
+    background-image: url(img/palette.png);
+}
+
+button.trash {
+    background-image: url(img/trash.png);
+}
+
+button.eraser {
+    background-image: url(img/eraser.png);
+}
+
+button.pencil {
+    background-image: url(img/pencil.png);
+}
+
+.adjuster {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-family: arcade;
+    padding: 8px 0px;
+}
+
+.slider {
+    width: 100px;
+    -webkit-appearance: none;
+    background:rgb(105, 124, 128);
+    border: 2px solid rgb(75, 83, 83);
+    margin-bottom: 4px;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    background: #7fb0cc;
+    height: 16px;
+    width: 16px;
+}
+
+.number {
+    width: 48px;
+    border: 2px solid rgb(75, 83, 83);
+    font-family: arcade;
+    text-align: center;
+}
+
+.number::-webkit-outer-spin-button,
+.number::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.number:focus {
+    outline: none !important;
+}
+
+.app {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgb(144, 166, 168);
+    padding-bottom: 64px;
+    border: 2px solid rgb(34, 34, 34);
+    border-radius: 8px;
+    padding: 8px;
+    flex-shrink: 0;
+}
+
+.app-area {
+    display: flex;
+    gap: 4px;
+    align-items: flex-start;
+}
+
+.toolbox,
+.box {
+    border: 2px solid rgb(34, 34, 34);
+}
+
+.toolbox {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: flex-start;
+    width: 128px;
+}
+
+.box {
+    width: 256px;
+    height: 256px;
+    background-color: white;
+}
+
+.square {
+    box-sizing: border-box;
+    float: left;
+}
+
+.square.mouseover {
+    background-color: rgb(255, 186, 108);
+}
+
+.mouseover {
+    filter: brightness(0.9);
+    -webkit-filter: brightness(0.9);
+}
+
+.mousedown {
+    filter: brightness(0.7);
+    -webkit-filter: brightness(0.7);
+}
+
+.hidden {
+    display: none;
+}
