@@ -59,9 +59,7 @@ for (let i = 0; i < totalSquares; ++i) {
                 const square = event.target;
                 const squareSize = BOX_SIZE / numSquares;
 
-                square.removeAttribute('style');
-                square.style.width = `${squareSize}px`;
-                square.style.height = `${squareSize}px`;
+                eraseSquare(square)
                 break;
             default:
                 throw 'unknown tool selected';
@@ -143,9 +141,7 @@ function configureSquares(value) {
         else
             square.classList.remove('hidden');
         
-        square.removeAttribute('style');
-        square.style.width = `${squareSize}px`;
-        square.style.height = `${squareSize}px`;
+        eraseSquare(square)
     }
 }
 
@@ -157,8 +153,12 @@ function clearSquares() {
         const squareSize = BOX_SIZE / numSquares;
         const square = squares[i];
 
-        square.removeAttribute('style');
-        square.style.width = `${squareSize}px`;
-        square.style.height = `${squareSize}px`;
+        eraseSquare(square)
     }
+}
+
+function eraseSquare(square) {
+    square.removeAttribute('style');
+    square.style.width = `${squareSize}px`;
+    square.style.height = `${squareSize}px`;
 }
