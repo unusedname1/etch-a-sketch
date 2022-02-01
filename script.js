@@ -14,71 +14,75 @@ let squareSize = BOX_SIZE / numSquares;
 let mouseDown = false;
 let color = '#000000';
 
-body.addEventListener('mousedown', () => { mouseDown = true; });
-body.addEventListener('mouseup', () => { mouseDown = false; });
+init();
 
-slider.addEventListener('change', () => {
-    number.value = slider.value;
-    configureSquares(slider.value);
-})
+function init() {
+    createGrid();
 
-number.addEventListener('change', () => {
-    if (number.value < MIN_SQUARES) number.value = MIN_SQUARES;
-    else if (number.value > MAX_SQUARES) number.value = MAX_SQUARES;
-
-    slider.value = number.value
-    configureSquares(number.value);
-})
-
-for (let i = 0; i < totalSquares; ++i) {
-    let square = document.createElement('div');
-
-    if (i < totalSquares - numSquares * numSquares)
-        square.classList.add('hidden');
-
-    const squareSize = BOX_SIZE / numSquares;
-    square.style.width = `${squareSize}px`;
-    square.style.height = `${squareSize}px`;
-
-    square.classList.add('square');
-    square.setAttribute('ondragstart', 'return false;');
-    square.setAttribute('ondrop', 'return false;');
-    square.addEventListener('click', paintSquare);
-    square.addEventListener('mousedown', paintSquare);
-    square.addEventListener('mouseenter', processMouseover);
-    square.addEventListener('mouseleave', removeMouseover);
-
-    box.appendChild(square);
-
-    function paintSquare(event) {
-        switch (tool) {
-            case 'pencil':
-                event.target.style.backgroundColor = color;
-                break;
-            case 'eraser':
-                const square = event.target;
-                const squareSize = BOX_SIZE / numSquares;
-
-                square.removeAttribute('style');
-                square.style.width = `${squareSize}px`;
-                square.style.height = `${squareSize}px`;
-                break;
-            default:
-                throw 'unknown tool selected';
-        }
-    }
-
-    function processMouseover(event) {
-        if (mouseDown) paintSquare(event);
-        else event.target.classList.add('mouseover');
-    }
-
-    function removeMouseover(event) {
-        event.target.classList.remove('mouseover');
-    }
+    body.addEventListener('mousedown', () => { mouseDown = true; });
+    body.addEventListener('mouseup', () => { mouseDown = false; });
+    
+    slider.addEventListener('change', () => {
+        number.value = slider.value;
+        configureSquares(slider.value);
+    })
+    
+    number.addEventListener('change', () => {
+        if (number.value < MIN_SQUARES) number.value = MIN_SQUARES;
+        else if (number.value > MAX_SQUARES) number.value = MAX_SQUARES;
+    
+        slider.value = number.value
+        configureSquares(number.value);
+    })
+    
+    buttons.forEach(addButtonListeners);
 }
 
-buttons.forEach(addButtonListeners);
+function createGrid() {
+    for (let i = 0; i < totalSquares; ++i) {
+        let square = document.createElement('div');
+    
+        if (i < totalSquares - numSquares * numSquares)
+            square.classList.add('hidden');
+    
+        const squareSize = BOX_SIZE / numSquares;
+        square.style.width = `${squareSize}px`;
+        square.style.height = `${squareSize}px`;
+    
+        square.classList.add('square');
+        square.setAttribute('ondragstart', 'return false;');
+        square.setAttribute('ondrop', 'return false;');
+        square.addEventListener('click', paintSquare);
+        square.addEventListener('mousedown', paintSquare);
+        square.addEventListener('mouseenter', processMouseover);
+        square.addEventListener('mouseleave', removeMouseover);
+    
+        box.appendChild(square);
+    
+        function paintSquare(event) {
+            switch (tool) {
+                case 'pencil':
+                    event.target.style.backgroundColor = color;
+                    break;
+                case 'eraser':
+                    const square = event.target;
+                    eraseSquare(square);
+                    break;
+                default:
+                    throw 'unknown tool selected';
+            }
+        }
+    
+        function processMouseover(event) {
+            if (mouseDown) paintSquare(event);
+            else event.target.classList.add('mouseover');
+        }
+    
+        function removeMouseover(event) {
+            event.target.classList.remove('mouseover');
+        }
+    }
+}
 
 function addButtonListeners(button) {
     switch (button.className) {
@@ -135,7 +139,6 @@ function configureSquares(value) {
     const numHidden = totalSquares - numSquares * numSquares;
 
     for (let i = 1; i <= totalSquares; ++i) {
-        const squareSize = BOX_SIZE / numSquares;
         const square = squares[i];
 
         if (i <= numHidden)
@@ -143,9 +146,7 @@ function configureSquares(value) {
         else
             square.classList.remove('hidden');
         
-        square.removeAttribute('style');
-        square.style.width = `${squareSize}px`;
-        square.style.height = `${squareSize}px`;
+        eraseSquare(square)
     }
 }
 
@@ -154,11 +155,15 @@ function clearSquares() {
     const numHidden = totalSquares - numSquares * numSquares;
 
     for (let i = totalSquares; i >= numHidden; --i) {
-        const squareSize = BOX_SIZE / numSquares;
         const square = squares[i];
-
-        square.removeAttribute('style');
-        square.style.width = `${squareSize}px`;
-        square.style.height = `${squareSize}px`;
+        eraseSquare(square)
     }
+}
+
+function eraseSquare(square) {
+    const squareSize = BOX_SIZE / numSquares;
+
+    square.removeAttribute('style');
+    square.style.width = `${squareSize}px`;
+    square.style.height = `${squareSize}px`;
 }
