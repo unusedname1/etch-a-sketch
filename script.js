@@ -1,4 +1,5 @@
 const MAX_SQUARES = 100;
+const MIN_SQUARES = 16;
 const BOX_SIZE = 256;
 const totalSquares = MAX_SQUARES * MAX_SQUARES;
 const body = document.querySelector('body');
@@ -22,8 +23,8 @@ slider.addEventListener('change', () => {
 })
 
 number.addEventListener('change', () => {
-    if (number.value < 16) number.value = 16;
-    else if (number.value > 100) number.value = 100;
+    if (number.value < MIN_SQUARES) number.value = MIN_SQUARES;
+    else if (number.value > MAX_SQUARES) number.value = MAX_SQUARES;
 
     slider.value = number.value
     configureSquares(number.value);
